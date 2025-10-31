@@ -545,7 +545,7 @@
       const formData = Object.fromEntries(new FormData(e.target).entries());
       
       // Submit personal info to webhook
-      fetch("http://localhost:5678/webhook-test/personal-info", {
+      fetch("https://prem771.app.n8n.cloud/webhook-test/b4783a91-8ccd-474e-b7ec-13277bb3abbe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
@@ -567,3 +567,4 @@
   </script>
 </body>
 </html>
+
