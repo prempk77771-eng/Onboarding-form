@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Information Form</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #FF8C00 0%, #6495ED 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,140,0,0.1) 0%, transparent 70%);
+      animation: pulse 15s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(180deg); }
+    }
+    
+    .form-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 30px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.5);
+      max-width: 800px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      animation: slideIn 0.6s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .form-header {
+      background: linear-gradient(135deg, #FF8C00 0%, #6495ED 100%);
+      color: white;
+      padding: 50px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .form-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .image-container {
+      width: 60px;
+      height: 60px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255,255,255,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    
+    .image-container:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.2);
+    }
+    
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.95;
+    }
+    
+    .header-text {
+      text-align: left;
+    }
+    
+    .form-header h1 {
+      font-size: 38px;
+      margin-bottom: 5px;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .form-header p {
+      font-size: 18px;
+      opacity: 0.95;
+    }
+    
+    .form-content {
+      padding: 50px 40px;
+    }
+    
+    .section-title {
+      color: #FF8C00;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 30px 0 20px;
+      padding-left: 15px;
+      border-left: 4px solid #FF8C00;
+      position: relative;
+    }
+    
+    .section-title:first-child {
+      margin-top: 0;
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+    
+    label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+    
+    label .required {
+      color: #FF8C00;
+      margin-left: 3px;
+      font-size: 16px;
+    }
+    
+    input, select, textarea {
+      padding: 14px 18px;
+      border: 2px solid #e8e8e8;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      background: white;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #FF8C00;
+      box-shadow: 0 0 0 4px rgba(255,140,0,0.1);
+      transform: translateY(-2px);
+    }
+    
+    input:hover, select:hover, textarea:hover {
+      border-color: #6495ED;
+    }
+    
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    
+    button {
+      padding: 16px 50px;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .btn-submit {
+      background: linear-gradient(135deg, #FF8C00 0%, #6495ED 100%);
+      color: white;
+      box-shadow: 0 10px 30px rgba(255,140,0,0.3);
+    }
+    
+    .btn-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255,140,0,0.4);
+    }
+    
+    .btn-submit:active {
+      transform: translateY(-1px);
+    }
+    
+    .btn-submit span {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .floating-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: float 20s ease-in-out infinite;
+    }
+    
+    .shape:nth-child(1) {
+      width: 100px;
+      height: 100px;
+      background: #FF8C00;
+      border-radius: 50%;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    
+    .shape:nth-child(2) {
+      width: 150px;
+      height: 150px;
+      background: #6495ED;
+      border-radius: 30%;
+      top: 60%;
+      right: 10%;
+      animation-delay: 5s;
+    }
+    
+    .shape:nth-child(3) {
+      width: 80px;
+      height: 80px;
+      background: #FF8C00;
+      border-radius: 20%;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 10s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-30px) rotate(120deg); }
+      66% { transform: translateY(30px) rotate(240deg); }
+    }
+    
+    @media (max-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-content {
+        padding: 40px 25px;
+      }
+      
+      .form-header {
+        padding: 40px 25px;
+      }
+      
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  
+  <div class="form-container">
+    <div class="form-header">
+      <div class="header-content">
+        <div class="image-container" {width: 600px;
+  height: 400px;}>
+          <img src="C:\Users\User\OneDrive - Arche Global Private Limited\Desktop\logo1.png" alt="Company Logo">
+        </div>
+        <div class="header-text">
+          <h1>Personal Information</h1>
+          <p>Let's get to know you better</p>
+        </div>
+      </div>
+    </div>
+    
+    <form id="personalInfoForm">
+      <div class="form-content">
+        <div class="section-title">Basic Details</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Salutation<span class="required">*</span></label>
+            <input type="text" name="salutation" required>
+          </div>
+          
+          <div class="form-group">
+            <label>First Name<span class="required">*</span></label>
+            <input type="text" name="first_name" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Last Name<span class="required">*</span></label>
+            <input type="text" name="last_name" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Father's Name<span class="required">*</span></label>
+            <input type="text" name="father_name" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Date of Birth<span class="required">*</span></label>
+            <input type="date" name="dob" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Age</label>
+            <input type="number" name="age">
+          </div>
+          
+          <div class="form-group">
+            <label>Gender<span class="required">*</span></label>
+            <select name="gender" required>
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Others</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Blood Group<span class="required">*</span></label>
+            <select name="blood_group" required>
+              <option value="">Select</option>
+              <option>A+</option><option>A-</option>
+              <option>B+</option><option>B-</option>
+              <option>O+</option><option>O-</option>
+              <option>AB+</option><option>AB-</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="section-title">Contact Information</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Mobile Number<span class="required">*</span></label>
+            <input type="tel" name="mobile_number" pattern="[0-9]{10}" placeholder="10 digits" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Alternate Contact<span class="required">*</span></label>
+            <input type="tel" name="alt_contact_number" pattern="[0-9]{10}" placeholder="10 digits" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Personal Email</label>
+            <input type="email" name="personal_email">
+          </div>
+          
+          <div class="form-group">
+            <label>Confirm Email<span class="required">*</span></label>
+            <input type="email" name="confirm_email" required>
+          </div>
+        </div>
+        
+        <div class="section-title">Identity Documents</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>PAN Number<span class="required">*</span></label>
+            <input type="text" name="pan" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Aadhar Number<span class="required">*</span></label>
+            <input type="text" name="aadhar" required>
+          </div>
+          
+          <div class="form-group">
+            <label>UAN Number</label>
+            <input type="text" name="uan">
+          </div>
+          
+          <div class="form-group">
+            <label>Profession Tax State</label>
+            <input type="text" name="pt_state">
+          </div>
+        </div>
+        
+        <div class="section-title">Address Details</div>
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label>Current Address<span class="required">*</span></label>
+            <textarea name="current_address" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Present City<span class="required">*</span></label>
+            <input type="text" name="present_city" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Present Pin<span class="required">*</span></label>
+            <input type="text" name="present_pin" required>
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Permanent Address<span class="required">*</span></label>
+            <textarea name="permanent_address" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Permanent City</label>
+            <input type="text" name="permanent_city">
+          </div>
+          
+          <div class="form-group">
+            <label>Permanent Pin</label>
+            <input type="text" name="permanent_pin">
+          </div>
+        </div>
+        
+        <div class="section-title">Emergency Contact</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Emergency Contact Name</label>
+            <input type="text" name="emergency_contact_name">
+          </div>
+          
+          <div class="form-group">
+            <label>Emergency Contact Number</label>
+            <input type="tel" name="emergency_contact_no">
+          </div>
+        </div>
+        
+        <div class="button-group">
+          <button type="submit" class="btn-submit">
+            <span>Submit Information ✓</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("personalInfoForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      const inputs = this.querySelectorAll('input[required], select[required], textarea[required]');
+      let valid = true;
+      
+      inputs.forEach(input => {
+        if (!input.value) {
+          input.style.borderColor = '#FF8C00';
+          input.style.boxShadow = '0 0 0 4px rgba(255,140,0,0.2)';
+          valid = false;
+        } else {
+          input.style.borderColor = '#e8e8e8';
+          input.style.boxShadow = 'none';
+        }
+      });
+      
+      if (!valid) {
+        alert('⚠️ Please fill in all required fields marked with *');
+        return;
+      }
+      
+      const formData = Object.fromEntries(new FormData(e.target).entries());
+      
+      // Submit personal info to webhook
+      fetch("http://localhost:5678/webhook-test/personal-info", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      })
+      .then(res => {
+        if (res.ok) {
+          alert('✅ Personal Information submitted successfully!');
+          this.reset();
+          console.log('Personal Info Data:', formData);
+        } else {
+          alert("❌ Submission failed. Please try again.");
+        }
+      })
+      .catch(err => {
+        console.error('Error:', err);
+        alert("❌ Error: " + err.message);
+      });
+    });
+  </script>
+</body>
+</html>
